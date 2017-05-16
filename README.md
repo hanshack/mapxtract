@@ -5,7 +5,7 @@ Style the map by coloring or adding/removing layers. Layers are: nature, houses,
 ### Made with
 Mapbox GL, turf, tiles from osm2vectortiles, geocoder by photon.komoot.de.
 
-### Eports
+### Exports
 SVG: Elements of the same layer have the same class name.
 GeoJson: Every feature has a color property.
 
