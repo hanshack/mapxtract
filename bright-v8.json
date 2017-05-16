@@ -1,0 +1,433 @@
+{
+    "version": 8,
+    "name": "Bright",
+
+    "sources": {
+        "mapbox": {
+            "url": "http://osm2vectortiles.tileserver.com/v2.json",
+            "type": "vector"
+        }
+    },
+    "sprite": "assets/sprite",
+    "glyphs": "assets/font/{fontstack}/{range}.pbf",
+
+    "metadata": {
+        "mapbox:groups": {
+            "1444849364238.8171": {
+                "name": "Buildings",
+                "collapsed": true
+            },
+            "1444849354174.1904": {
+                "name": "Tunnels",
+                "collapsed": true
+            },
+            "1444849320558.5054": {
+                "name": "Water labels",
+                "collapsed": true
+            },
+            "1444849371739.5945": {
+                "name": "Aeroways",
+                "collapsed": true
+            },
+            "1444849388993.3071": {
+                "name": "Landuse",
+                "collapsed": true
+            },
+            "1444849242106.713": {
+                "name": "Country labels",
+                "collapsed": true
+            },
+            "1444849382550.77": {
+                "name": "Water",
+                "collapsed": true
+            },
+            "1444849345966.4436": {
+                "name": "Roads",
+                "collapsed": true
+            },
+            "1444849307123.581": {
+                "name": "Admin labels",
+                "collapsed": true
+            },
+            "1444849272561.29": {
+                "name": "Place labels",
+                "collapsed": true
+            },
+            "1444849290021.1838": {
+                "name": "Road labels",
+                "collapsed": true
+            },
+            "1444849334699.1902": {
+                "name": "Bridges",
+                "collapsed": true
+            }
+        }
+    },
+    "layers": [
+        {
+            "id": "background",
+            "type": "background",
+            "paint": {
+                "background-color": "#F6F6F6"
+            }
+        },
+        {
+            "id": "nature",
+            "type": "fill",
+            "source": "mapbox",
+            "source-layer": "landuse",
+            "filter": ["any", ["==","class","park"],["==","class","wood"],["==","class","cemetery"],["==","class","grass"],["==","class","grassland"],["==","class","heath"],["==","class","marsh"],["==","class","meadow"],["==","class","tree"],["==","class","tree_row"],["==","class","scrub"]],
+            "paint": {
+                "fill-color": "#BDDFBB"
+            },
+            "metadata": {
+                "mapbox:group": "1444849388993.3071"
+            },
+            "interactive": true
+        },
+        {
+            "id": "water",
+            "type": "fill",
+            "source": "mapbox",
+            "source-layer": "water",
+            "paint": {
+                "fill-color": "#2AA3BD"
+            },
+            "metadata": {
+                "mapbox:group": "1444849382550.77"
+            }
+        },
+        {
+            "id": "house",
+            "type": "fill",
+            "source": "mapbox",
+            "source-layer": "building",
+            "paint": {
+                "fill-color": "#3C3F58",
+                "fill-outline-color": "#ddd"
+            },
+            "metadata": {
+                "mapbox:group": "1444849364238.8171"
+            }
+        },
+        {
+            "id": "street",
+            "type": "line",
+            "source": "mapbox",
+            "source-layer": "road",
+            "filter": ["any", ["==","class","street"],["==","class","main"],["==","class","motorway"],["==","class","motorway_link"],["==","class","motorway"],["==","class","primary"],["==","class","secondary"],["==","class","tertiary"],["==","class","residential"]],
+            "minzoom": 12,
+            "layout": {
+                "line-cap": "round",
+                "line-join": "round"
+            },
+            "paint": {
+                "line-color": "#807F7F",
+                "line-width": {
+                    "base": 1.2,
+                    "stops": [
+                        [
+                            12,
+                            1
+                        ],
+                        [
+                            13,
+                            3
+                        ],
+                        [
+                            20,
+                            13
+                        ]
+                    ]
+                }
+            },
+            "metadata": {
+                "mapbox:group": "1444849345966.4436"
+            }
+        },
+        {
+            "id": "admin",
+            "type": "line",
+            "source": "mapbox",
+            "source-layer": "admin",
+            "filter": [
+                "all",
+                [
+                    ">=",
+                    "admin_level",
+                    2
+                ]
+            ],
+            "layout": {
+                "line-join": "round",
+                "line-cap": "round"
+            },
+            "paint": {
+                "line-color": "#000",
+                "line-width": {
+                    "base": 1,
+                    "stops": [
+                        [
+                            4,
+                            0.2
+                        ],
+                        [
+                            5,
+                            0.5
+                        ],
+                        [
+                            12,
+                            4
+                        ]
+                    ]
+                }
+            },
+            "metadata": {
+                "mapbox:group": "1444849307123.581"
+            }
+        },
+
+
+
+
+        {
+            "id": "suburb_lable",
+            "type": "symbol",
+            "source": "mapbox",
+            "source-layer": "place_label",
+            "filter": [
+                "==",
+                "type",
+                "suburb"
+            ],
+            "layout": {
+                "text-font": [
+                    "Open Sans Regular"
+                ],
+                "text-field": "{name_en}",
+                "text-max-width": 8,
+                "text-size": {
+                    "base": 1.2,
+                    "stops": [
+                        [
+                            10,
+                            14
+                        ],
+                        [
+                            15,
+                            24
+                        ]
+                    ]
+                }
+            },
+            "paint": {
+                "text-color": "#333",
+                "text-halo-color": "rgba(255,255,255,0.8)",
+                "text-halo-width": 1.2
+            },
+            "metadata": {
+                "mapbox:group": "1444849272561.29"
+            }
+        },
+        {
+            "id": "place_label_city",
+            "type": "symbol",
+            "source": "mapbox",
+            "source-layer": "place_label",
+            "filter": [
+                "==",
+                "type",
+                "city"
+            ],
+            "layout": {
+                "text-font": [
+                    "Open Sans Semibold"
+                ],
+                "text-field": "{name_en}",
+                "text-max-width": 8,
+                "text-size": {
+                    "base": 1.2,
+                    "stops": [
+                        [
+                            7,
+                            14
+                        ],
+                        [
+                            11,
+                            24
+                        ]
+                    ]
+                }
+            },
+            "paint": {
+                "text-color": "#333",
+                "text-halo-color": "rgba(255,255,255,0.8)",
+                "text-halo-width": 1.2
+            },
+            "metadata": {
+                "mapbox:group": "1444849272561.29"
+            }
+        },
+        
+        {
+            "id": "country_label_4",
+            "type": "symbol",
+            "source": "mapbox",
+            "source-layer": "country_label",
+            "filter": [
+                ">=",
+                "scalerank",
+                4
+            ],
+            "layout": {
+                "text-font": [
+                    "Open Sans Bold"
+                ],
+                "text-field": "{name_en}",
+                "text-max-width": 6.25,
+                "text-transform": "uppercase",
+                "text-size": {
+                    "stops": [
+                        [
+                            5,
+                            13
+                        ],
+                        [
+                            6,
+                            15
+                        ]
+                    ]
+                }
+            },
+            "paint": {
+                "text-color": "#334",
+                "text-halo-color": "rgba(255,255,255,0.8)",
+                "text-halo-width": 2,
+                "text-halo-blur": 1
+            },
+            "metadata": {
+                "mapbox:group": "1444849242106.713"
+            }
+        },
+        {
+            "id": "country_label_3",
+            "type": "symbol",
+            "source": "mapbox",
+            "source-layer": "country_label",
+            "filter": [
+                "==",
+                "scalerank",
+                3
+            ],
+            "layout": {
+                "text-font": [
+                    "Open Sans Bold"
+                ],
+                "text-field": "{name_en}",
+                "text-max-width": 6.25,
+                "text-transform": "uppercase",
+                "text-size": {
+                    "stops": [
+                        [
+                            4,
+                            13
+                        ],
+                        [
+                            7,
+                            17
+                        ]
+                    ]
+                }
+            },
+            "paint": {
+                "text-color": "#334",
+                "text-halo-color": "rgba(255,255,255,0.8)",
+                "text-halo-width": 2,
+                "text-halo-blur": 1
+            },
+            "metadata": {
+                "mapbox:group": "1444849242106.713"
+            }
+        },
+        {
+            "id": "country_label_2",
+            "type": "symbol",
+            "source": "mapbox",
+            "source-layer": "country_label",
+            "filter": [
+                "==",
+                "scalerank",
+                2
+            ],
+            "layout": {
+                "text-font": [
+                    "Open Sans Bold"
+                ],
+                "text-field": "{name_en}",
+                "text-max-width": 6.25,
+                "text-transform": "uppercase",
+                "text-size": {
+                    "stops": [
+                        [
+                            3,
+                            13
+                        ],
+                        [
+                            5,
+                            17
+                        ]
+                    ]
+                }
+            },
+            "paint": {
+                "text-color": "#334",
+                "text-halo-color": "rgba(255,255,255,0.8)",
+                "text-halo-width": 2,
+                "text-halo-blur": 1
+            },
+            "metadata": {
+                "mapbox:group": "1444849242106.713"
+            }
+        },
+        {
+            "id": "country_label_1",
+            "type": "symbol",
+            "source": "mapbox",
+            "source-layer": "country_label",
+            "filter": [
+                "==",
+                "scalerank",
+                1
+            ],
+            "layout": {
+                "text-font": [
+                    "Open Sans Bold"
+                ],
+                "text-field": "{name_en}",
+                "text-max-width": 6.25,
+                "text-transform": "uppercase",
+                "text-size": {
+                    "stops": [
+                        [
+                            2,
+                            13
+                        ],
+                        [
+                            4,
+                            17
+                        ]
+                    ]
+                }
+            },
+            "paint": {
+                "text-color": "#334",
+                "text-halo-color": "rgba(255,255,255,0.8)",
+                "text-halo-width": 2,
+                "text-halo-blur": 1
+            },
+            "metadata": {
+                "mapbox:group": "1444849242106.713"
+            }
+        }
+    ]
+}

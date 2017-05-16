@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>MapXtract</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src='js/mapbox-gl.js'></script>
+    <link href='css/mapbox-gl.css' rel='stylesheet' />
+    <script src='js/turf.js'></script> 
+
+    <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+
+    <script type="text/javascript" src="js/proj4.js"></script>
+    <script type="text/javascript" src="js/reproject.min.js"></script>
+    <script type="text/javascript" src="js/geojson2svg.min.js"></script>
+    <script type="text/javascript" src="js/base64.js"></script>
+
+    <link href='css/font-awesome.min.css' rel='stylesheet' />
+
+    <script type="text/javascript" src="js/spin.min.js"></script>
+
+
+    <!-- Modal -->
+    <link rel="stylesheet" href="css/modal.css">
+
+    <!-- Tooltip -->
+    <link rel="stylesheet" type="text/css" href="css/tooltipster.bundle.min.css" />
+    <script src='js/tooltipster.bundle.min.js'/></script>
+   
+    <!-- Colorpicker -->
+    <script src='js/spectrum.js'></script>
+    <link rel='stylesheet' href='css/spectrum.css' />
+
+
+    <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+
+    <link href='css/main.css' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+
+
+
+
+
+    <div id = "menue">
+        <div class = "button layer active" title="edit building layer" value = "house"><i class="fa fa-building-o" aria-hidden="true"></i>
+
+            <div class = "button visibility active">
+                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+            <div class = "button color"><i class="fa fa-paint-brush" aria-hidden="true"></i></div>
+
+        </div>
+
+        <div class = "button layer" title="edit nature layer" value = "nature"><i class="fa fa-leaf" aria-hidden="true"></i>
+            <div class = "button visibility active">
+                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+            <div class = "button color"><i class="fa fa-paint-brush" aria-hidden="true"></i></div>
+        </div>
+
+        <div class = "button layer" title="edit water layer" value = "water"><i class="fa fa-tint" aria-hidden="true"></i>
+
+            <div class = "button visibility active">
+                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+            <div class = "button color"><i class="fa fa-paint-brush" aria-hidden="true"></i></div>
+
+        </div>
+        <div class = "button layer" title="edit road layer"  value = "street"><i class="fa fa-road" aria-hidden="true"></i>
+            <div class = "button visibility active">
+                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+            <div class = "button color"><i class="fa fa-paint-brush" aria-hidden="true"></i></div>
+        </div>
+        <div class = "button layer" title="edit admin layer"  value = "admin"><i class="fa fa-square-o" aria-hidden="true"></i>
+            <div class = "button visibility active">
+                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+            <div class = "button color"><i class="fa fa-paint-brush" aria-hidden="true"></i></div>
+        </div>
+        <div class = "button layer" title="edit background layer"  value = "background"><i class="fa fa-square" aria-hidden="true"></i>
+            <div class = "button visibility active">
+                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+            <div class = "button color"><i class="fa fa-paint-brush" aria-hidden="true"></i></div>
+        </div>
+
+        <div class = "button extractWrapper hidden" title="save layer" >
+
+            <i class="fa fa-download" aria-hidden="true"></i>
+            <div class = "button extract svg" value = "svg"><p>svg</p></div>
+            <div class = "button extract png" value = "png"><p>png</p></div>
+            <div class = "button extract json" value = "json"><p>json</p></div>
+
+        </div>
+
+    </div>
+
+    <div id =zoom>
+        <div class="button search"><i class="fa fa-search" aria-hidden="true"></i></div><input type="text" class="addressInput" placeholder="Search for a City">
+
+        <div class = "button zoomIn" onclick="map.zoomIn()"><i class="fa fa-plus" aria-hidden="true"></i></div>
+        <div class = "button zoomOut" onclick="map.zoomOut()"><i class="fa fa-minus" aria-hidden="true"></i></div>
+        
+    </div>
+
+    <div id =social>
+        <a href="#modal-about">
+            <div class = "button" ><i class="fa fa-info" aria-hidden="true"></i></div>
+        </a>
+        <a target="_blank" title="Tweet" href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fhanshack.com%2Fmapxtract%2F&text=MapXtract:%20http%3A%2F%2Fhanshack.com%2Fmapxtract%2F&via=hnshck">
+            <div class = "button" >
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+            </div>
+        </a>
+    </div>
+
+    <!-- for PNG -->
+    <canvas id = "canvas" style="display:none"></canvas>
+
+    <section class="modal--fade" id="modal-about" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+
+        <div class="modal-inner">
+            <header id="modal-label">About MapXtract - <small>beta</small></header>
+            <div class="modal-content">
+                <p>
+                    <b>Style</b> the map by coloring or adding/removing layers. Layers are: nature, houses, water, roads and administrative zones. 
+                    <br><br>
+                    <b>Save</b> the map as png, svg or geoJson.
+                    <br><br>
+                    Due to performance reasons it is currrently not possible to save the map when zoomed out afar. 
+                    <br><br><br>
+                    <b>Technical details:</b><br> 
+                    Made with: Mapbox GL, turf, tiles from osm2vectortiles, geocoder by photon.komoot.de.<br>
+                    SVG: Elements of the same layer have the same class name.<br>
+                    GeoJson: Every feature has a color property.<br>
+                    The site is monitored with the open source tool PIWIK.
+                    <br><br>
+                    A project by <a target="_blank" href="http://hanshack.com">Hans Hack</a> -  <a target="_blank" href="https://twitter.com/hnshck">@hnshck</a>
+
+                </p></div>
+        </div>
+
+        <a href="#!" class="modal-close" title="Close" data-close="Close" data-dismiss="modal-about">X</a>
+
+    </section>
+
+    <div id='map'></div>
+    <p id = "attribution">Made by: <a target="_blank" title="hanshack.com" href="http://www.hanshack.com">Hans Hack</p>
+
+
+    <script src='js/main.js'></script>
+
+
+
+</body>
+</html>
+
