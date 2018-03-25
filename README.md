@@ -1,6 +1,7 @@
 # mapXtract
 Edit maps and save them as svg, png or geoJson
 Style the map by coloring or adding/removing layers. Layers are: nature, houses, water, roads and administrative zones.
+Website: http://hanshack.com/mapxtract/
 
 ### Made with
 Mapbox GL, turf, tiles from osm2vectortiles, geocoder by photon.komoot.de.
