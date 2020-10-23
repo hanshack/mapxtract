@@ -11,4 +11,4 @@ SVG: Elements of the same layer have the same class name.
 GeoJson: Every feature has a color property.
 
 ### Bugs
-Due to performance reasons it is currrently not possible to save the map when zoomed out afar.
+Due to performance reasons it is currently not possible to save the map when zoomed out afar.
